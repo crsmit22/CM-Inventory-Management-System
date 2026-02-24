@@ -1,4 +1,124 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+
+header {
+    background-color: rgb(60, 60, 80); /* Still need an official color */
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 40px;
+    flex-wrap: wrap; /* allows stacking */
+}
+
+
+/* nav */
+header img {
+    width: 90px;
+    height: auto;
+}
+
+nav {
+    display: flex;
+    gap: 3rem;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease; /*makes the hover a bit slower */
+}
+
+nav a:hover {
+    color: rgb(180, 180, 180);
+}
+
+/* main */
 .home {
     width: 80%;
+    max-width: 900px;
+    margin: 60px auto;
+    background-color: white;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.home h1 {
+    margin-bottom: 20px;
+    color: rgb(60, 60, 80); /* Still need an official color */
+}
+
+.home p {
+    margin-bottom: 15px;
+}
+
+.thankyou {
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+/* tablet */
+
+
+@media (max-width: 768px) {
+
+    header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 15px;
+    }
+
+    nav {
+        gap: 1.5rem;
+    }
+
+    .home {
+        width: 90%;
+        padding: 30px;
+    }
+}
+
+
+/* phone */
+
+
+@media (max-width: 480px) {
+
+    nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    nav a {
+        display: block;
+        padding: 5px 0;
+    }
+
+    header img {
+        width: 70px;
+    }
+
+    .home {
+        width: 95%;
+        padding: 20px;
+    }
+
+    .home h1 {
+        font-size: 1.3rem;
+    }
 }
