@@ -19,3 +19,13 @@ def removeItem():
 def updateItem():
     pass
 
+create_table_query="""
+CREATE TABLE IF NOT EXISTS Student(
+  StudentId INT,
+  Name VARCHAR(50),
+  Major VARCHAR(30),
+  CONSTRAINT Student_PK PRIMARY KEY(StudentId)
+)"""
+cursor.execute(create_table_query)
+
+cursor.execute("INSERT INTO Student (StudentId, Name, Major) VALUES (1, 'Alice', 'CS')")
