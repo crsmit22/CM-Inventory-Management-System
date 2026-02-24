@@ -24,6 +24,21 @@ def createDatabase():   # This function creates the database with its table
         cursor.execute(create_table_query)
 
 
+def search(searchWord): # Search function takes one search string and looks for match in Name, Category, or Location
+                        # Returns a list of Tuples that contain all the data for each row of matches
+
+    searchQuerey = """
+        SELECT * FROM Inventory WHERE
+        Name = ? OR Category = ? OR Location = ?"""
+    
+    with sqlite3.connect("inventoryDB.db") as conn:
+        cursor = conn.cursor()
+
+        cursor.execute(searchQuerey, (searchWord, searchWord, searchWord))
+
+        rows = cursor.fetchall()
+
+    return rows
         
 
 def addItem(Name, Description, Category, Quantity, Location):
