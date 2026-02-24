@@ -1,5 +1,5 @@
 import sqlite3
-import datetime
+from datetime import date
 
 #Each item will have the following attributes:
     #name, description, quantity, category, date last updated, and location
@@ -39,16 +39,15 @@ def search(searchWord): # Search function takes one search string and looks for 
         rows = cursor.fetchall()
 
     return rows
-        
 
-def addItem(Name, Description, Category, Quantity, Location):
+def addItem(n, d, c, q, l):
     with sqlite3.connect("inventoryDB.db") as conn:
         cursor = conn.cursor()
     cursor.execute(
         """INSERT INTO Inventory (Name, Description, Category, Quantity, Location, LastUpdated) VALUES 
-                   (Name, Description, Category, Quantity, Location, datetime.date.today())"""
+                   (n, d, c, q, l, date.today())"""
     )
-    
+    #return print(f"Successfully added {n}")
 
 def removeItem():
     pass
