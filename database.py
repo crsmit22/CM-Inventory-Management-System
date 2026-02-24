@@ -10,7 +10,7 @@ def createDatabase():   # This function creates the database with its table
         
         create_table_query = """
         CREATE TABLE IF NOT EXISTS Inventory(
-            ItemID INT PRIMARY KEY AUTOINCREMENT,
+            ItemID INTEGER PRIMARY KEY AUTOINCREMENT,
             Name VARCHAR(50),
             Description VARCHAR(30),
             Category VARCHAR(30),
@@ -23,7 +23,22 @@ def createDatabase():   # This function creates the database with its table
         cursor.execute(create_table_query)
 
 
-        
+def search(searchWord): # Search function takes one search string and looks for match in Name, Category, or Location
+                        # Returns a list of Tuples that contain all the data for each row of matches
+
+    searchQuerey = """
+        SELECT * FROM Inventory WHERE
+        Name = ? OR Category = ? OR Location = ?"""
+    
+    with sqlite3.connect("inventoryDB.db") as conn:
+        cursor = conn.cursor()
+
+        cursor.execute(searchQuerey, (searchWord, searchWord, searchWord))
+
+        rows = cursor.fetchall()
+
+    return rows
+
 
 def addItem():
     pass
