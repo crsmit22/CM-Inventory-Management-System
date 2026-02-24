@@ -4,9 +4,14 @@ import sqlite3
     #name, description, quantity, category, date last updated, and location
 
 
-def createDatabase():
+def createDatabase():   # This function creates the database with its table
     with sqlite3.connect("inventoryDB.db") as conn:
         cursor = conn.cursor()
+
+        
+        
+        cursor.execute(create_table_query)
+
 
         
 
@@ -19,13 +24,6 @@ def removeItem():
 def updateItem():
     pass
 
-create_table_query="""
-CREATE TABLE IF NOT EXISTS Student(
-  StudentId INT,
-  Name VARCHAR(50),
-  Major VARCHAR(30),
-  CONSTRAINT Student_PK PRIMARY KEY(StudentId)
-)"""
-cursor.execute(create_table_query)
+
 
 cursor.execute("INSERT INTO Student (StudentId, Name, Major) VALUES (1, 'Alice', 'CS')")
