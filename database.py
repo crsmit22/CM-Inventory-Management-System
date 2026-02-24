@@ -5,7 +5,10 @@ import sqlite3
 
 
 def createDatabase():
-    pass
+    with sqlite3.connect("inventoryDB.db") as conn:
+        cursor = conn.cursor()
+
+        
 
 def addItem():
     pass
