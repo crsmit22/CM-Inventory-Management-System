@@ -20,7 +20,6 @@ def createDatabase():   # This function creates the database with its table
             LastUpdated DATE
             ) """
         
-        
         cursor.execute(create_table_query)
 
 
@@ -60,6 +59,12 @@ def removeItem(itemID): # Function takes item ID. Deletes item by ID.
         cursor = conn.cursor()
 
         cursor.execute(searchQuerey, (itemID))
+        #ADDING A BUNCH OF RANDOM STUFF
+
+
+
+
+        #STILL ADDING CODE
 
 def updateItem(itemID, n, d, c, q, l): # Function takes an item ID and updates said item
     with sqlite3.connect("inventoryDB.db") as conn:
