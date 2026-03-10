@@ -91,5 +91,3 @@ def updateItem(itemID, n, d, c, q, l): # Function takes an item ID and updates s
 #  ('Small hosts tub', 'unconsecrated hosts used for Mass, 1 3/8in', 'Supplies', 5, 'Hosts Cabinet', 2025-02-20),
 #  ('Purificator', 'used to clean sacred vessels', 'Linens', 15, 'Liturgy Linens', 2020-11-30),
 #  ('Lavabo Towel', 'used for Fr. to dry his wet hands before consecration', 'Linens', 2, 'Liturgy Linens', 2022-05-13);"""
-
-#BRANCH ][p][p]l'l[p][l';l][p';TEST
