@@ -25,10 +25,11 @@ def createDatabase():   # This function creates the database with its table
 
 def search(searchWord): # Search function takes one search string and looks for match in Name, Category, or Location
                         # Returns a list of Tuples that contain all the data for each row of matches
+    searchWord = f"%{searchWord}%"
 
     searchQuerey = """
         SELECT * FROM Inventory WHERE
-        Name = ? OR Category = ? OR Location = ?"""
+        Name LIKE ? OR Category LIKE ? OR Location LIKE ?"""
     
     with sqlite3.connect("inventoryDB.db") as conn:
         cursor = conn.cursor()
@@ -59,7 +60,6 @@ def removeItem(itemID): # Function takes item ID. Deletes item by ID.
         cursor = conn.cursor()
 
         cursor.execute(searchQuerey, (itemID))
-        #ADDING A BUNCH OF RANDOM STUFF
 
 
 
