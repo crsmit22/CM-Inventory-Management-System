@@ -62,10 +62,6 @@ def removeItem(itemID): # Function takes item ID. Deletes item by ID.
         cursor.execute(searchQuerey, (itemID))
 
 
-
-
-        #STILL ADDING CODE
-
 def updateItem(itemID, n, d, c, q, l): # Function takes an item ID and updates said item
     with sqlite3.connect("inventoryDB.db") as conn:
         cursor = conn.cursor()
@@ -100,5 +96,3 @@ def updateItem(itemID, n, d, c, q, l): # Function takes an item ID and updates s
 # print(search("candle"))
 # print(search("purificator"))
 # print(search("Candle"))
-
-#BRANCH TEST
