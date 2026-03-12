@@ -84,3 +84,14 @@ def updateItem(itemID, n, d, c, q, l):
         """
 
         cursor.execute(updateQuery, (n, d, c, q, l, date.today(), itemID))
+
+# instertString = """INSERT INTO Inventory (Name, Description, Category, Quantity, Location, LastUpdated) VALUES 
+# ('Luna', 'Glass container to hold the Eucharist in a Monstrance', 'Sacred Vessels', 1, 'Tabernacle', 2026-02-22), 
+# ('Cruet', 'holds the water and the wine for Mass', 'Glassware', 2, 'Minifridge', 2026-01-20), 
+# ('Main Candle Extinguisher', 'extinguishes candles', null, 1, 'Sacristy Closet Door', 2026-01-20),
+# ('Small hosts tub', 'unconsecrated hosts used for Mass, 1 3/8in', 'Supplies', 5, 'Hosts Cabinet', 2025-02-20),
+# ('Purificator', 'used to clean sacred vessels', 'Linens', 15, 'Liturgy Linens', 2020-11-30), # ('Lavabo Towel', 'used for Fr. to dry his wet hands before consecration', 'Linens', 2, 'Liturgy Linens', 2022-05-13);""" 
+# with sqlite3.connect("inventoryDB.db") as conn: # cursor = conn.cursor() # cursor.execute(instertString)
+# print(search("candle")) 
+# print(search("purificator")) 
+# print(search("Candle"))
