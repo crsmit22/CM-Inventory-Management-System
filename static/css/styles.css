@@ -299,3 +299,12 @@ nav a:hover {
         flex-wrap: wrap;
     }
 }
+.btn-delete {
+    background-color: #c0392b;
+    color: white;
+    padding: 8px 12px;
+}
+
+.btn-delete:hover {
+    background-color: #a93226;
+}
