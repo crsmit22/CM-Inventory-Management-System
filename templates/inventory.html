@@ -1,24 +1,297 @@
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 
 <head>
+    <meta charset="UTF-8">
     <title>Sacristy Inventory Management System</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 
 <body>
 
-    <header>
-        <div class="logo">
-            <img src="{{ url_for('static', filename='img/smumnCMLogo.png') }}" alt="Campus Ministry Logo">
-        </div>
+<header>
+    <div class="logo">
+        <img src="{{ url_for('static', filename='img/smumnCMLogo.png') }}" alt="Campus Ministry Logo">
+    </div>
 
-        <nav>
-            <a href="{{ url_for('home') }}">Home</a>
-            <a href="{{ url_for('inventory') }}">Inventory</a>
-            <a href="{{ url_for('contact') }}">Contact</a>
-        </nav>
-    </header>
+    <nav>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('inventory') }}">Inventory</a>
+        <a href="{{ url_for('contact') }}">Contact</a>
+    </nav>
+</header>
 
-</html>
+
+<main class="inventory-page">
+
+<section class="inventory-card">
+
+<div class="inventory-top">
+
+<div>
+<h1>Sacristy Inventory</h1>
+<p class="subtitle">Manage inventory items and supplies.</p>
+</div>
+
+<div class="inventory-actions">
+<input type="text" id="searchInput" placeholder="Search by name, category, or location">
+<button id="searchBtn" class="btn btn-secondary">Search</button>
+<button id="showAddFormBtn" class="btn btn-primary">Insert Item</button>
+</div>
+
+</div>
+
+
+<div id="addItemPanel" class="add-item-panel hidden">
+
+<h2>Add New Item</h2>
+
+<div class="form-grid">
+<input type="text" id="name" placeholder="Item Name">
+<input type="text" id="description" placeholder="Description">
+<input type="text" id="category" placeholder="Category">
+<input type="number" id="quantity" placeholder="Quantity">
+<input type="text" id="location" placeholder="Location">
+</div>
+
+<div class="form-buttons">
+<button id="addItemBtn" class="btn btn-primary">Save Item</button>
+<button id="cancelAddBtn" class="btn btn-secondary">Cancel</button>
+</div>
+
+</div>
+
+
+<div class="table-wrapper">
+
+<table id="inventoryTable">
+
+<thead>
+<tr>
+<th>ID</th>
+<th>Name</th>
+<th>Description</th>
+<th>Category</th>
+<th>Quantity</th>
+<th>Location</th>
+<th>Last Updated</th>
+<th>Actions</th>
+</tr>
+</thead>
+
+<tbody id="inventoryBody">
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+</main>
+
+
+
+<script>
+
+
+async function loadInventory() {
+
+const response = await fetch("/api/items");
+
+const items = await response.json();
+
+renderTable(items);
+
+}
+
+
+
+function renderTable(items) {
+
+const tableBody = document.getElementById("inventoryBody");
+
+tableBody.innerHTML = "";
+
+if(items.length === 0){
+
+tableBody.innerHTML = `
+<tr>
+<td colspan="8" class="empty-message">No inventory items found.</td>
+</tr>
+`;
+
+return;
+
+}
+
+items.forEach(item => {
+
+const row = document.createElement("tr");
+
+row.innerHTML = `
+<td>${item.ItemID}</td>
+<td>${item.Name}</td>
+<td>${item.Description}</td>
+<td>${item.Category}</td>
+<td>${item.Quantity}</td>
+<td>${item.Location}</td>
+<td>${item.LastUpdated}</td>
+<td>
+<button class="btn btn-delete" onclick="deleteItem(${item.ItemID})">Delete</button>
+</td>
+`;
+
+tableBody.appendChild(row);
+
+});
+
+}
+
+
+
+async function searchInventory(){
+
+const query = document.getElementById("searchInput").value.trim();
+
+if(query === ""){
+
+loadInventory();
+
+return;
+
+}
+
+const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
+
+const items = await response.json();
+
+renderTable(items);
+
+}
+
+
+
+async function addItem(){
+
+const name = document.getElementById("name").value.trim();
+
+const description = document.getElementById("description").value.trim();
+
+const category = document.getElementById("category").value.trim();
+
+const quantity = document.getElementById("quantity").value.trim();
+
+const location = document.getElementById("location").value.trim();
+
+
+if(!name || !description || !category || !quantity || !location){
+
+alert("Please fill in all fields.");
+
+return;
+
+}
+
+
+const response = await fetch("/api/items", {
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+Name:name,
+Description:description,
+Category:category,
+Quantity:quantity,
+Location:location
+})
+
+});
+
+
+const result = await response.json();
+
+if(result.ok){
+
+document.getElementById("name").value = "";
+
+document.getElementById("description").value = "";
+
+document.getElementById("category").value = "";
+
+document.getElementById("quantity").value = "";
+
+document.getElementById("location").value = "";
+
+document.getElementById("addItemPanel").classList.add("hidden");
+
+loadInventory();
+
+}
+
+}
+
+
+
+async function deleteItem(id){
+
+if(!confirm("Delete this item?")) return;
+
+await fetch(`/api/items/${id}`, {
+
+method:"DELETE"
+
+});
+
+loadInventory();
+
+}
+
+
+
+document.getElementById("searchBtn").addEventListener("click", searchInventory);
+
+
+
+document.getElementById("searchInput").addEventListener("keypress", function(event){
+
+if(event.key === "Enter"){
+
+searchInventory();
+
+}
+
+});
+
+
+
+document.getElementById("showAddFormBtn").addEventListener("click", function(){
+
+document.getElementById("addItemPanel").classList.remove("hidden");
+
+});
+
+
+
+document.getElementById("cancelAddBtn").addEventListener("click", function(){
+
+document.getElementById("addItemPanel").classList.add("hidden");
+
+});
+
+
+
+document.getElementById("addItemBtn").addEventListener("click", addItem);
+
+
+
+loadInventory();
+
+
+</script>
+
+</body>
