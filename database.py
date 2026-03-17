@@ -85,6 +85,8 @@ def updateItem(itemID, n, d, c, q, l):
 
         cursor.execute(updateQuery, (n, d, c, q, l, date.today(), itemID))
 
+# TESTING DATA
+#
 # instertString = """INSERT INTO Inventory (Name, Description, Category, Quantity, Location, LastUpdated) VALUES 
 # ('Luna', 'Glass container to hold the Eucharist in a Monstrance', 'Sacred Vessels', 1, 'Tabernacle', 2026-02-22), 
 # ('Cruet', 'holds the water and the wine for Mass', 'Glassware', 2, 'Minifridge', 2026-01-20), 
