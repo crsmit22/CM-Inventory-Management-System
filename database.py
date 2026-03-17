@@ -1,7 +1,10 @@
 import sqlite3
 from datetime import date
 
-def createDatabase():
+#Each item will have the following attributes:
+    #name, description, quantity, category, date last updated, and location
+
+def createDatabase():  # This function creates the database with its table
     with sqlite3.connect("inventoryDB.db") as conn:
         cursor = conn.cursor()
 
@@ -31,7 +34,8 @@ def getAllItems():
     return rows
 
 
-def search(searchWord):
+def search(searchWord):  # Search function takes one search string and looks for match in Name, Category, or Location
+                         # Returns a list of Tuples that contain all the data for each row of matches
     searchWord = f"%{searchWord}%"
 
     searchQuery = """
@@ -49,7 +53,8 @@ def search(searchWord):
     return rows
 
 
-def addItem(n, d, c, q, l):
+def addItem(n, d, c, q, l): # Function adds an element to the database; takes name, description,
+                            # category, quanitity, and location as attributes
     with sqlite3.connect("inventoryDB.db") as conn:
         cursor = conn.cursor()
         addQuery = """
@@ -60,7 +65,7 @@ def addItem(n, d, c, q, l):
         cursor.execute(addQuery, (n, d, c, q, l, date.today()))
 
 
-def removeItem(itemID):
+def removeItem(itemID): # Function takes item ID. Deletes item by ID.
     deleteQuery = "DELETE FROM Inventory WHERE ItemID = ?"
 
     with sqlite3.connect("inventoryDB.db") as conn:
@@ -68,7 +73,8 @@ def removeItem(itemID):
         cursor.execute(deleteQuery, (itemID,))
 
 
-def updateItem(itemID, n, d, c, q, l):
+def updateItem(itemID, n, d, c, q, l): # Function takes an item ID and updates said item with new
+                                       # name, description, category, quantity, location attributes
     with sqlite3.connect("inventoryDB.db") as conn:
         cursor = conn.cursor()
         updateQuery = """
