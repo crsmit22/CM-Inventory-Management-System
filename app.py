@@ -5,6 +5,23 @@ app = Flask(__name__)
 
 database.createDatabase()
 
+#Make json function to remove duplicate code
+def makeJSON(rows):
+    items = []
+
+    for r in rows:
+        items.append({
+            "ItemID": r["ItemID"],
+            "Name": r["Name"],
+            "Description": r["Description"],
+            "Category": r["Category"],
+            "Quantity": r["Quantity"],
+            "Location": r["Location"],
+            "LastUpdated": r["LastUpdated"],
+        })
+    return jsonify(items)
+
+
 @app.route("/")
 def home():
     return render_template("index.html")
@@ -21,20 +38,9 @@ def contact():
 @app.route("/api/items", methods=["GET"])
 def api_get_items():
     rows = database.getAllItems()
-    items = []
 
-    for r in rows:
-        items.append({
-            "ItemID": r["ItemID"],
-            "Name": r["Name"],
-            "Description": r["Description"],
-            "Category": r["Category"],
-            "Quantity": r["Quantity"],
-            "Location": r["Location"],
-            "LastUpdated": r["LastUpdated"],
-        })
+    return makeJSON(rows)
 
-    return jsonify(items)
 
 
 @app.route("/api/search", methods=["GET"])
@@ -46,19 +52,7 @@ def api_search():
     else:
         rows = database.search(q)
 
-    items = []
-    for r in rows:
-        items.append({
-            "ItemID": r["ItemID"],
-            "Name": r["Name"],
-            "Description": r["Description"],
-            "Category": r["Category"],
-            "Quantity": r["Quantity"],
-            "Location": r["Location"],
-            "LastUpdated": r["LastUpdated"],
-        })
-
-    return jsonify(items)
+    return makeJSON(rows)
 
 
 @app.route("/api/items", methods=["POST"])
