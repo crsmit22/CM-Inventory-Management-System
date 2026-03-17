@@ -1,24 +1,26 @@
 from flask import Flask, render_template, request, jsonify
 import database
 
-app = Flask(__name__)
+app = Flask(__name__)#Application Setup
 
+#Create database on startup
 database.createDatabase()
 
-@app.route("/")
+# Page Routes
+@app.route("/")#Home page rout
 def home():
     return render_template("index.html")
 
-@app.route("/inventory")
+@app.route("/inventory")#Inventory page route
 def inventory():
     return render_template("inventory.html")
 
-@app.route("/contact")
+@app.route("/contact")#Contact page route
 def contact():
     return render_template("contact.html")
 
-
-@app.route("/api/items", methods=["GET"])
+#API Routes
+@app.route("/api/items", methods=["GET"])#Get all inventory items
 def api_get_items():
     rows = database.getAllItems()
     items = []
@@ -37,7 +39,7 @@ def api_get_items():
     return jsonify(items)
 
 
-@app.route("/api/search", methods=["GET"])
+@app.route("/api/search", methods=["GET"])#Search inventory items
 def api_search():
     q = request.args.get("q", "").strip()
 
@@ -61,7 +63,7 @@ def api_search():
     return jsonify(items)
 
 
-@app.route("/api/items", methods=["POST"])
+@app.route("/api/items", methods=["POST"])#Add a new inventory item
 def api_add_item():
     data = request.get_json(force=True)
 
@@ -75,7 +77,7 @@ def api_add_item():
     return jsonify({"ok": True})
 
 
-@app.route("/api/items/<int:item_id>", methods=["PUT"])
+@app.route("/api/items/<int:item_id>", methods=["PUT"])# Delete an inventory item
 def api_update_item(item_id):
     data = request.get_json(force=True)
 
@@ -94,6 +96,6 @@ def api_delete_item(item_id):
     database.removeItem(item_id)
     return jsonify({"ok": True})
 
-
+#Run the Flask application
 if __name__ == "__main__":
     app.run(debug=True)
